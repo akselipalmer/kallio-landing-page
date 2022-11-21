@@ -1,34 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import React, { useState, useEffect } from "react";
+import { Container, Grid, Paper, Typography } from "@mui/material";
+import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
+import { orange } from "@mui/material/colors";
+import { Box } from "@mui/system";
+import "./App.css";
+import BasicCard from "./components/Card";
+import DrawerAppBar from "./components/Header";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [mode, setMode] = useState("light");
+
+  const theme = createTheme({
+    palette: {
+      mode: mode,
+    },
+  });
+
+  const handleChangeMode = () => {
+    setMode(mode === "light" ? "dark" : "light");
+  };
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+    <ThemeProvider theme={theme}>
+      <DrawerAppBar changeMode={handleChangeMode} />
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;
